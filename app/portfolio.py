@@ -58,8 +58,10 @@ class Portfolio:
             )
     
     def query_links(self, skills):
-        results = self.collection.query(
-            query_texts=[skills], 
-            n_results=2
-        )
-        return results.get("metadatas", [])
+        if isinstance(skills, list):
+            skills = ", ".join(skills)
+        query_text = str(skills)
+        results = self.collection.query(query_texts=[query_text], n_results=2).get("metadatas", [])
+        return results
+
+  
